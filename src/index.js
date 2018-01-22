@@ -1,31 +1,40 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
+import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
-const API_KEY = 'AIzaSyCPcYQhXKNEI4eC1ofjGUXAODQN7ONU5wI';
+import VideoDetail from './components/video_detail';
+import _ from 'lodash';
+const API_KEY = 'AIzaSyBTDqA9Ta0Ya4xOHzYLdXaWKZdoSNnfjSw'; 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { videos: [] };
-        
-        YTSearch({key: API_KEY, term: 'Elon Musk'}, (videos) => {
-            this.setState({ videos });
-            // this.setState({ videos: videos }) works when the key and the value are the same name
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <SearchBar />
-                <VideoList videos={ this.state.videos } /> 
-            </div>
-        );   // defining the property videos on the JSX
-    }
+  constructor(props) {
+    super(props);
+    this.state = { 
+      videos: [],
+      selectedVideo: null
+    };
+    this.videoSearch('Elon');
+  }
+  videoSearch(term) {
+    YTSearch({key: API_KEY, term: term}, (videos) => {
+      this.setState({ 
+        videos: videos,
+        selectedVideo: videos[0]
+      });
+    });
+  }
+  render() {
+    const videoSearch = _.debounce((term) => { this.videoSearch(term)}, 300)
+    return (
+      <div>
+       <SearchBar onSearchTermChange={videoSearch} />
+       <VideoDetail video={this.state.selectedVideo} />
+       <VideoList 
+        onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+        videos={this.state.videos} />
+      </div>
+    )
+  }
 }
-
-
-ReactDOM.render(<App />, document.querySelector('.container'), console.log('callback'));
+ReactDOM.render(<App />, document.querySelector('.container'));
