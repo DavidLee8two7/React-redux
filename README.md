@@ -1,3 +1,3 @@
 ## YouTube Search Engine App<br>
 
-React / Redux / YouTube API / Webpack
+Built with React / Redux / YouTube API / Webpack
