@@ -2,12 +2,15 @@
 Built with React, Redux, YouTube API, and Webpack.
 
 ## `To install on your system`
+Download it on your system
+```bash
+git clone https://github.com/SanBuNam/YouTube_App_regulated_search.git
+```
+Install dependencies
 ```bash
 npm install
 ```
-
-git clone this repository
-
+Start the App
 ```bash
 npm run start
 ```
