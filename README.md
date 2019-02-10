@@ -17,4 +17,4 @@ npm run start
 
 ## `Description`
 
-A YouTube app that can regulate the search result.
+A YouTube app that can regulate the search result. You need to write your own logic for the regulation.
